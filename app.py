@@ -19,6 +19,11 @@ def hello():
 @app.route('/signup/<username>/<email>/<password>')
 @cross_origin()
 def save_data_user(username, email, password):
+    x = mycol.find_one({"username": str(username)})
+    if x["username"] == username:
+        return {
+            'Status': 'Error'
+        }
     mycol.insert_one({"_id": ObjectId(),"username": str(username), "email": str(email), "password": str(password)})
     return {
         'Status': 'success',
