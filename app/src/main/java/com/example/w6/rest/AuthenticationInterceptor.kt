@@ -14,7 +14,7 @@ class AuthenticationInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val url: HttpUrl = chain.request().url()
             .newBuilder()
-            .addQueryParameter("api_key", "7519cb3f829ecd53bd9b7007076dbe23")
+            .addQueryParameter("api_key", "46ec83c05e17370e71c1ad416e76efd1")
             .build()
 
         val request: Request = chain.request().newBuilder().url(url).build()

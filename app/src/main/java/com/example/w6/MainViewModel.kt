@@ -30,4 +30,33 @@ class MainViewModel : ViewModel() {
             Log.e("TAG++++ upcomming", movieResp.results.toString())
         }
     }
+
+//    fun getData() {
+//        TODO("Not yet implemented")
+//        viewModelScope.launch {
+//            val movieResp = RestClient.getInstance().API.listNowPlayMovies(language = "en-US", page = 1, apiKey = "46ec83c05e17370e71c1ad416e76efd1")
+//            Log.e(tag: "TAG", movieResp.results.toString())
+//        }
+//    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
