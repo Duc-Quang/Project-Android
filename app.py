@@ -20,7 +20,7 @@ def hello():
 @cross_origin()
 def save_data_user(username, email, password):
     x = mycol.find_one({"username": str(username)})
-    if x["username"] == username:
+    if x != None:
         return {
             'Status': 'Error'
         }
