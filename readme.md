@@ -6,3 +6,5 @@
 ### - $ git add .
 ### - $ git commit -am "make it better"
 ### - $ git push heroku master
+---
+**Note: create env <python3 -m venv env>** 
