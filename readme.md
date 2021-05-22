@@ -1,6 +1,6 @@
 # RUN APP API 
 ### - heroku login
-### - heroku logs --tailrozen
+### - heroku logs --tail
 ### - $ heroku git:clone -a genxshopping
 ### - $ cd genxshopping
 ### - $ git add .
