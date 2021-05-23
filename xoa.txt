@@ -1,3 +1,6 @@
+- Home GenX:
+https://genxshopping.herokuapp.com/
+
 - Show database:
 https://genxshopping.herokuapp.com/showdb
 
@@ -14,3 +17,11 @@ https://genxshopping.herokuapp.com/signup/api?api_key=46ec83c05e17370e71c1ad416e
 
 - Signin (Đăng nhập) can key api:
 https://genxshopping.herokuapp.com/signin/api?api_key=46ec83c05e17370e71c1ad416e76efd1&username=quang&password=123
+
+-------
+
+- Delete account:
+https://genxshopping.herokuapp.com/delete?username=quangtrung
+
+- Update account:
+https://genxshopping.herokuapp.com/update?username=quyen99&email=quyenhuynh@gmail.com&password=quyenne
