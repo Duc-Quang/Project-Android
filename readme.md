@@ -1,7 +1,7 @@
 # GENX FASHION WEB API ANDROID
 
 **Download extension json to view more pretty**
-## - https://chrome.google.com/webstore/detail/json-viewer/gbmdgpbipfallnflgajpaliibnhdgobh/related?hl=vi
+- https://chrome.google.com/webstore/detail/json-viewer/gbmdgpbipfallnflgajpaliibnhdgobh/related?hl=vi
 
 ## INTRODUCTION:
 - Home GenX:
