@@ -30,10 +30,10 @@ class MainActivity : AppCompatActivity() {
         post_button.setOnClickListener { postMethod() }
 
         get_button.setOnClickListener { getMethod() }
-
-        put_button.setOnClickListener { putMethod() }
-
-        delete_button.setOnClickListener { deleteMethod() }
+//
+//        put_button.setOnClickListener { putMethod() }
+//
+//        delete_button.setOnClickListener { deleteMethod() }
 
     }
 
@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
 
         // Create Retrofit
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://dummy.restapiexample.com")
+            .baseUrl("http://genxshopping.herokuapp.com")
             .build()
 
         // Create Service
@@ -63,9 +63,9 @@ class MainActivity : AppCompatActivity() {
 
         // Create JSON using JSONObject
         val jsonObject = JSONObject()
-        jsonObject.put("name", "Jack")
-        jsonObject.put("salary", "3540")
-        jsonObject.put("age", "23")
+        jsonObject.put("username", "caominhphat")
+        jsonObject.put("email", "caominhphat@gmail.com")
+        jsonObject.put("password", "phat123")
 
         // Convert JSONObject to String
         val jsonObjectString = jsonObject.toString()
@@ -103,108 +103,108 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun formData() {
-
-        // Create Retrofit
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://httpbin.org")
-            .build()
-
-        // Create Service
-        val service = retrofit.create(APIService::class.java)
-
-        // List of all MIME Types you can upload: https://www.freeformatter.com/mime-types-list.html
-
-        // Get file from assets folder
-        val file = getFileFromAssets(this, "lorem_ipsum.txt")
-
-        val fields: HashMap<String?, RequestBody?> = HashMap()
-        fields["email"] = ("jack@email.com").toRequestBody("text/plain".toMediaTypeOrNull())
-        fields["file\"; filename=\"upload_file.txt\" "] =
-            (file).asRequestBody("text/plain".toMediaTypeOrNull())
-
-        CoroutineScope(Dispatchers.IO).launch {
-
-            // Do the POST request and get response
-            val response = service.uploadEmployeeData(fields)
-
-            withContext(Dispatchers.Main) {
-                if (response.isSuccessful) {
-
-                    // Convert raw JSON to pretty JSON using GSON library
-                    val gson = GsonBuilder().setPrettyPrinting().create()
-                    val prettyJson = gson.toJson(
-                        JsonParser.parseString(
-                            response.body()
-                                ?.string() // About this thread blocking annotation : https://github.com/square/retrofit/issues/3255
-                        )
-                    )
-                    Log.d("Pretty Printed JSON :", prettyJson)
-
-                    val intent = Intent(this@MainActivity, DetailsActivity::class.java)
-                    intent.putExtra("json_results", prettyJson)
-                    this@MainActivity.startActivity(intent)
-
-                } else {
-
-                    Log.e("RETROFIT_ERROR", response.code().toString())
-
-                }
-            }
-        }
-    }
-
-    private fun urlEncoded() {
-        // Create Retrofit
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://postman-echo.com")
-            .build()
-
-        // Create Service
-        val service = retrofit.create(APIService::class.java)
-
-        // Create HashMap with fields
-        val params = HashMap<String?, String?>()
-        params["name"] = "Jack"
-        params["salary"] = "8054"
-        params["age"] = "45"
-
-        CoroutineScope(Dispatchers.IO).launch {
-
-            // Do the POST request and get response
-            val response = service.createEmployee(params)
-
-            withContext(Dispatchers.Main) {
-                if (response.isSuccessful) {
-
-                    // Convert raw JSON to pretty JSON using GSON library
-                    val gson = GsonBuilder().setPrettyPrinting().create()
-                    val prettyJson = gson.toJson(
-                        JsonParser.parseString(
-                            response.body()
-                                ?.string() // About this thread blocking annotation : https://github.com/square/retrofit/issues/3255
-                        )
-                    )
-                    Log.d("Pretty Printed JSON :", prettyJson)
-
-                    val intent = Intent(this@MainActivity, DetailsActivity::class.java)
-                    intent.putExtra("json_results", prettyJson)
-                    this@MainActivity.startActivity(intent)
-
-                } else {
-
-                    Log.e("RETROFIT_ERROR", response.code().toString())
-
-                }
-            }
-        }
-    }
-
+//    private fun formData() {
+//
+//        // Create Retrofit
+//        val retrofit = Retrofit.Builder()
+//            .baseUrl("https://httpbin.org")
+//            .build()
+//
+//        // Create Service
+//        val service = retrofit.create(APIService::class.java)
+//
+//        // List of all MIME Types you can upload: https://www.freeformatter.com/mime-types-list.html
+//
+//        // Get file from assets folder
+//        val file = getFileFromAssets(this, "lorem_ipsum.txt")
+//
+//        val fields: HashMap<String?, RequestBody?> = HashMap()
+//        fields["email"] = ("jack@email.com").toRequestBody("text/plain".toMediaTypeOrNull())
+//        fields["file\"; filename=\"upload_file.txt\" "] =
+//            (file).asRequestBody("text/plain".toMediaTypeOrNull())
+//
+//        CoroutineScope(Dispatchers.IO).launch {
+//
+//            // Do the POST request and get response
+//            val response = service.uploadEmployeeData(fields)
+//
+//            withContext(Dispatchers.Main) {
+//                if (response.isSuccessful) {
+//
+//                    // Convert raw JSON to pretty JSON using GSON library
+//                    val gson = GsonBuilder().setPrettyPrinting().create()
+//                    val prettyJson = gson.toJson(
+//                        JsonParser.parseString(
+//                            response.body()
+//                                ?.string() // About this thread blocking annotation : https://github.com/square/retrofit/issues/3255
+//                        )
+//                    )
+//                    Log.d("Pretty Printed JSON :", prettyJson)
+//
+//                    val intent = Intent(this@MainActivity, DetailsActivity::class.java)
+//                    intent.putExtra("json_results", prettyJson)
+//                    this@MainActivity.startActivity(intent)
+//
+//                } else {
+//
+//                    Log.e("RETROFIT_ERROR", response.code().toString())
+//
+//                }
+//            }
+//        }
+//    }
+//
+//    private fun urlEncoded() {
+//        // Create Retrofit
+//        val retrofit = Retrofit.Builder()
+//            .baseUrl("https://postman-echo.com")
+//            .build()
+//
+//        // Create Service
+//        val service = retrofit.create(APIService::class.java)
+//
+//        // Create HashMap with fields
+//        val params = HashMap<String?, String?>()
+//        params["name"] = "Jack"
+//        params["salary"] = "8054"
+//        params["age"] = "45"
+//
+//        CoroutineScope(Dispatchers.IO).launch {
+//
+//            // Do the POST request and get response
+//            val response = service.createEmployee(params)
+//
+//            withContext(Dispatchers.Main) {
+//                if (response.isSuccessful) {
+//
+//                    // Convert raw JSON to pretty JSON using GSON library
+//                    val gson = GsonBuilder().setPrettyPrinting().create()
+//                    val prettyJson = gson.toJson(
+//                        JsonParser.parseString(
+//                            response.body()
+//                                ?.string() // About this thread blocking annotation : https://github.com/square/retrofit/issues/3255
+//                        )
+//                    )
+//                    Log.d("Pretty Printed JSON :", prettyJson)
+//
+//                    val intent = Intent(this@MainActivity, DetailsActivity::class.java)
+//                    intent.putExtra("json_results", prettyJson)
+//                    this@MainActivity.startActivity(intent)
+//
+//                } else {
+//
+//                    Log.e("RETROFIT_ERROR", response.code().toString())
+//
+//                }
+//            }
+//        }
+//    }
+//
     private fun getMethod() {
 
         // Create Retrofit
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://dummy.restapiexample.com")
+            .baseUrl("http://genxshopping.herokuapp.com")
             .build()
 
         // Create Service
@@ -244,110 +244,110 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
-    private fun putMethod() {
-
-        // Create Retrofit
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://reqres.in")
-            .build()
-
-        // Create Service
-        val service = retrofit.create(APIService::class.java)
-
-        // Create JSON using JSONObject
-        val jsonObject = JSONObject()
-        jsonObject.put("name", "Nicole")
-        jsonObject.put("job", "iOS Developer")
-
-        // Convert JSONObject to String
-        val jsonObjectString = jsonObject.toString()
-
-        // Create RequestBody ( We're not using any converter, like GsonConverter, MoshiConverter e.t.c, that's why we use RequestBody )
-        val requestBody = jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
-
-        CoroutineScope(Dispatchers.IO).launch {
-
-            // Do the PUT request and get response
-            val response = service.updateEmployee(requestBody)
-
-            withContext(Dispatchers.Main) {
-                if (response.isSuccessful) {
-
-                    // Convert raw JSON to pretty JSON using GSON library
-                    val gson = GsonBuilder().setPrettyPrinting().create()
-                    val prettyJson = gson.toJson(
-                        JsonParser.parseString(
-                            response.body()
-                                ?.string() // About this thread blocking annotation : https://github.com/square/retrofit/issues/3255
-                        )
-                    )
-                    Log.d("Pretty Printed JSON :", prettyJson)
-
-                    val intent = Intent(this@MainActivity, DetailsActivity::class.java)
-                    intent.putExtra("json_results", prettyJson)
-                    this@MainActivity.startActivity(intent)
-
-                } else {
-
-                    Log.e("RETROFIT_ERROR", response.code().toString())
-
-                }
-            }
-        }
-    }
-
-    private fun deleteMethod() {
-
-        // Create Retrofit
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://my-json-server.typicode.com/")
-            .build()
-
-        // Create Service
-        val service = retrofit.create(APIService::class.java)
-
-        CoroutineScope(Dispatchers.IO).launch {
-
-            // Do the DELETE request and get response
-
-            val response = service.deleteEmployee()
-            withContext(Dispatchers.Main) {
-                if (response.isSuccessful) {
-
-                    // Convert raw JSON to pretty JSON using GSON library
-                    val gson = GsonBuilder().setPrettyPrinting().create()
-                    val prettyJson = gson.toJson(
-                        JsonParser.parseString(
-                            response.body()
-                                ?.string() // About this thread blocking annotation : https://github.com/square/retrofit/issues/3255
-                        )
-                    )
-                    Log.d("Pretty Printed JSON :", prettyJson)
-
-                    val intent = Intent(this@MainActivity, DetailsActivity::class.java)
-                    intent.putExtra("json_results", prettyJson)
-                    this@MainActivity.startActivity(intent)
-
-                } else {
-
-                    Log.e("RETROFIT_ERROR", response.code().toString())
-
-                }
-            }
-        }
-    }
-
-
-    private fun getFileFromAssets(context: Context, fileName: String): File =
-        File(context.cacheDir, fileName)
-            .also {
-                if (!it.exists()) {
-                    it.outputStream().use { cache ->
-                        context.assets.open(fileName).use { inputStream ->
-                            inputStream.copyTo(cache)
-                        }
-                    }
-                }
-            }
+//
+//    private fun putMethod() {
+//
+//        // Create Retrofit
+//        val retrofit = Retrofit.Builder()
+//            .baseUrl("https://reqres.in")
+//            .build()
+//
+//        // Create Service
+//        val service = retrofit.create(APIService::class.java)
+//
+//        // Create JSON using JSONObject
+//        val jsonObject = JSONObject()
+//        jsonObject.put("name", "Nicole")
+//        jsonObject.put("job", "iOS Developer")
+//
+//        // Convert JSONObject to String
+//        val jsonObjectString = jsonObject.toString()
+//
+//        // Create RequestBody ( We're not using any converter, like GsonConverter, MoshiConverter e.t.c, that's why we use RequestBody )
+//        val requestBody = jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
+//
+//        CoroutineScope(Dispatchers.IO).launch {
+//
+//            // Do the PUT request and get response
+//            val response = service.updateEmployee(requestBody)
+//
+//            withContext(Dispatchers.Main) {
+//                if (response.isSuccessful) {
+//
+//                    // Convert raw JSON to pretty JSON using GSON library
+//                    val gson = GsonBuilder().setPrettyPrinting().create()
+//                    val prettyJson = gson.toJson(
+//                        JsonParser.parseString(
+//                            response.body()
+//                                ?.string() // About this thread blocking annotation : https://github.com/square/retrofit/issues/3255
+//                        )
+//                    )
+//                    Log.d("Pretty Printed JSON :", prettyJson)
+//
+//                    val intent = Intent(this@MainActivity, DetailsActivity::class.java)
+//                    intent.putExtra("json_results", prettyJson)
+//                    this@MainActivity.startActivity(intent)
+//
+//                } else {
+//
+//                    Log.e("RETROFIT_ERROR", response.code().toString())
+//
+//                }
+//            }
+//        }
+//    }
+//
+//    private fun deleteMethod() {
+//
+//        // Create Retrofit
+//        val retrofit = Retrofit.Builder()
+//            .baseUrl("https://my-json-server.typicode.com/")
+//            .build()
+//
+//        // Create Service
+//        val service = retrofit.create(APIService::class.java)
+//
+//        CoroutineScope(Dispatchers.IO).launch {
+//
+//            // Do the DELETE request and get response
+//
+//            val response = service.deleteEmployee()
+//            withContext(Dispatchers.Main) {
+//                if (response.isSuccessful) {
+//
+//                    // Convert raw JSON to pretty JSON using GSON library
+//                    val gson = GsonBuilder().setPrettyPrinting().create()
+//                    val prettyJson = gson.toJson(
+//                        JsonParser.parseString(
+//                            response.body()
+//                                ?.string() // About this thread blocking annotation : https://github.com/square/retrofit/issues/3255
+//                        )
+//                    )
+//                    Log.d("Pretty Printed JSON :", prettyJson)
+//
+//                    val intent = Intent(this@MainActivity, DetailsActivity::class.java)
+//                    intent.putExtra("json_results", prettyJson)
+//                    this@MainActivity.startActivity(intent)
+//
+//                } else {
+//
+//                    Log.e("RETROFIT_ERROR", response.code().toString())
+//
+//                }
+//            }
+//        }
+//    }
+//
+//
+//    private fun getFileFromAssets(context: Context, fileName: String): File =
+//        File(context.cacheDir, fileName)
+//            .also {
+//                if (!it.exists()) {
+//                    it.outputStream().use { cache ->
+//                        context.assets.open(fileName).use { inputStream ->
+//                            inputStream.copyTo(cache)
+//                        }
+//                    }
+//                }
+//            }
 }
