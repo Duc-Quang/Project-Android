@@ -15,4 +15,6 @@ ignore
 - Xuat QR ()
 + doan ma => backend => thong tin
 
-ubuntu@192.168.60.128
+ssh ubuntu@192.168.60.128
+
+git clone -b QR-App_Android https://github.com/Duc-Quang/Project-Android.git
