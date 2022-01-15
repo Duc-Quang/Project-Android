@@ -1,0 +1,18 @@
+- Dang ki:
++ Username
++ Id card
++ Address
++ Car Number
++ Img license plates
++ password
+=> QR code
+
+- dang nhap
++ Username
++ password 
+
+ignore
+- Xuat QR ()
++ doan ma => backend => thong tin
+
+ubuntu@192.168.60.128
