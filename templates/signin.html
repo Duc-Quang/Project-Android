@@ -1,11 +1,27 @@
-<form role="form" action = "/signin" method=post>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+    <form role="form" action = "/signin" method=post>
 
-    <div class="input-group mb-3">
-        <input class="form-control" placeholder="username" name = "username">
+        <div class="input-group mb-3">
+            <input class="form-control" placeholder="username" name = "username">
+        </div>
+        
+        <div class="input-group mb-4">
+            <input type="password" class="form-control" placeholder="password" name = "password">
+        </div>
+        
+        <button name="signin" class="btn btn-primary shadow-2 mb-4" style="font-weight:bolder;" type="submit">Login</button>
+
+    </form>
+    <div>
+        <a href="/signup" target="_blank" rel="noopener noreferrer">Sign up</a>
     </div>
-    
-    <div class="input-group mb-4">
-        <input type="password" class="form-control" placeholder="password" name = "password">
-    </div>
-    
-</form>
+</body>
+</html>

@@ -28,10 +28,10 @@ def QR(s):
     # Generate QR code
     url = pyqrcode.create(str(s))
     
-    # Create and save the png file naming "qr_id.png"
-    url.png(Const.QR_FOLDER + f'/qr_{str(s)}.png', scale = 6)
+    # Create and save the jpeg file naming "qr_id.jpeg"
+    url.png(Const.QR_FOLDER + f'/qr_{str(s)}.jpeg', scale = 6)
 
-    return '/static/images/qrcode/' + f'qr_{str(s)}.png'
+    return '/static/images/qrcode/' + f'qr_{str(s)}.jpeg'
 
 def check_folder(path_folder):
     if not os.path.exists(path_folder):

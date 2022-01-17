@@ -21,7 +21,7 @@ mycol_user = mydb['user']
 @app.route('/')
 def index():
     # return 'Hello world!'
-    return redirect(url_for("signup"))
+    return redirect(url_for("signin"))
 
 # ===========SIGNIN/SIGNUP-POST===========
 @app.route('/signup', methods=['GET', 'POST'])
@@ -92,36 +92,40 @@ def signup():
         })
         return {
             'status': 'success',
-            'qr code': "https://" + request.host + link_qr
+            'qr code': "https://" + request.host + link_qr,
+            'signin': "https://" + request.host + '/signin'
         }
     else:
         return render_template('signup.html')
 
 
-@app.route('/signin', methods=['POST'])
+@app.route('/signin', methods=['GET', 'POST'])
 @cross_origin()
 def signin():
-    username = request.form['username']
-    password = request.form['password']
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
 
-    x = mycol_user.find_one({"username": username})
-    result = hashlib.md5(password.encode())
-    password = result.hexdigest()
+        x = mycol_user.find_one({"username": username})
+        result = hashlib.md5(password.encode())
+        password = result.hexdigest()
 
-    if x != None and x['password'] == str(password):
-        _id = x['_id']
-        idcard = x['idcard']
-        link_img = x['link_img']
+        if x != None and x['password'] == str(password):
+            _id = x['_id']
+            idcard = x['idcard']
+            link_img = x['link_img']
+            return {
+                'status': 'success',
+                'id_user': f'{_id}',
+                'user_name': f'{username}',
+                'idcard': f'{idcard}',
+                'link_img': "https://" + request.host +  link_img
+            }
         return {
-            'status': 'success',
-            'id_user': f'{_id}',
-            'user_name': f'{username}',
-            'idcard': f'{idcard}',
-            'link_img': "https://" + request.host +  link_img
+            'status': 'Not found user'
         }
-    return {
-        'status': 'Not found user'
-    }
+    else:
+        return render_template('signin.html')
 
 @app.route('/static/images/<folder>/<img>')
 @cross_origin()
