@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign up</title>
+</head>
+<body>
+    <form role="form" action = "/signup" method=post enctype=multipart/form-data>
+
+        <div class="input-group mb-3">
+            <input class="form-control" placeholder="username" name = "username">
+        </div>
+
+        <div class="input-group mb-3">
+            <input class="form-control" placeholder="idcard" name = "idcard">
+        </div>
+
+        <div class="input-group mb-3">
+            <input class="form-control" placeholder="address" name = "address">
+        </div>
+
+        <div class="input-group mb-3">
+            <input class="form-control" placeholder="carnum" name = "carnum">
+        </div>
+        
+        <div class="input-group mb-4">
+            <input type="password" class="form-control" placeholder="password" name = "password">
+        </div>
+        
+        <input type=file name=file>
+
+        <br>
+        <br>
+
+        <button name="signup" class="btn btn-primary shadow-2 mb-4" style="font-weight:bolder;" type="submit">Sign Up</button>
+
+    </form>
+</body>
+</html>
