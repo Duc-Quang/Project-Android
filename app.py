@@ -21,7 +21,7 @@ mycol_user = mydb['user']
 @app.route('/')
 def index():
     # return 'Hello world!'
-    return url_for("signup")
+    return redirect(url_for("signup"))
 
 # ===========SIGNIN/SIGNUP-POST===========
 @app.route('/signup', methods=['GET', 'POST'])
