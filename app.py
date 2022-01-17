@@ -1,5 +1,6 @@
 import os
 from flask import Flask, request, send_from_directory, redirect, url_for, flash, render_template
+from flask_restful import Api
 from werkzeug.utils import secure_filename
 import hashlib
 import pymongo
@@ -11,6 +12,8 @@ from imgprocessing import allowed_file, Opt_img, QR, check_folder
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = Const.UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = Const.MAX_CONTENT_LENGTH
+
+api = Api(app)
 cors = CORS(app)
 
 myclient = pymongo.MongoClient(Const.PATH_MONGO)
