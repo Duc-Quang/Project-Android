@@ -35,5 +35,5 @@ def QR(s):
 
 def check_folder(path_folder):
     if not os.path.exists(path_folder):
-        os.mkdir(path_folder)
+        os.makedirs(path_folder, exist_ok=True)
     return
