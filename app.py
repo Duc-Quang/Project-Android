@@ -136,7 +136,7 @@ def view_img(name):
     url = Const.PATH_PROJECT + '/static/img/license-plates'
     print(url) 
     if os.path.exists(url):
-        return send_from_directory(f'static/img/{folder}/', name, mimetype='image/gif')
+        return send_from_directory('static/img/license-plates/', name, mimetype='image/gif')
     return {
         "status": "Not Found"
     }
