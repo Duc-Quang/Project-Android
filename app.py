@@ -132,6 +132,7 @@ def signin():
 def view_img(folder, img):
     url = Const.PATH_PROJECT + '/static/img'
     if os.path.exists(url):
+        print(f'{url}/{folder}/', img)
         return send_from_directory(f'{url}/{folder}/', img, mimetype='image/jpeg')
     return {
         "status": "Not Found"
