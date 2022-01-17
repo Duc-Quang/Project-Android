@@ -130,10 +130,10 @@ def signin():
     else:
         return render_template('signin.html')
 
-@app.route('/static/images/<folder>/<name>')
+@app.route('/static/images/license-plates/<name>')
 @cross_origin()
-def view_img(folder, name):
-    url = Const.PATH_PROJECT + '/static/img/' + folder
+def view_img(name):
+    url = Const.PATH_PROJECT + '/static/img/license-plates'
     print(url) 
     if os.path.exists(url):
         return send_from_directory(f'static/img/{folder}/', name, mimetype='image/gif')
