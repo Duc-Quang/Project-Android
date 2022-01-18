@@ -22,7 +22,7 @@ def Opt_img(pathfile, s):
 
     os.remove(pathfile)
 
-    return "/static/images/license-plates/" + str(s) + ".JPEG"
+    return "/static/license-plates/" + f'/img_{str(s)}' + ".jpeg"
   
 def QR(s):
     # Generate QR code
@@ -31,7 +31,7 @@ def QR(s):
     # Create and save the jpeg file naming "qr_id.jpeg"
     url.png(Const.QR_FOLDER + f'/qr_{str(s)}.jpeg', scale = 6)
 
-    return '/static/images/qrcode/' + f'qr_{str(s)}.jpeg'
+    return '/static/qrcode/' + f'qr_{str(s)}.jpeg'
 
 def check_folder(path_folder):
     if not os.path.exists(path_folder):
