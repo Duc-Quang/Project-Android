@@ -1,6 +1,6 @@
 import os
 
-HOST_SERVERS = "https://0.0.0.0:5000"
+# HOST_SERVERS = "http://0.0.0.0:5000"
 
 PATH_PROJECT = os.path.dirname(__file__)
 

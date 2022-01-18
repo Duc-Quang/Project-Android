@@ -16,7 +16,7 @@ def Opt_img(pathfile, s):
     # open the image
     picture = Image.open(pathfile)
     
-    picture.save(Const.UPLOAD_FOLDER + '/' + str(s) + ".JPEG", 
+    picture.save(Const.UPLOAD_FOLDER + '/' + f'/img_{str(s)}' + ".JPEG", 
                  optimize = True, 
                  quality = 10)
 

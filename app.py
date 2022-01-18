@@ -102,8 +102,8 @@ def signup():
         })
         return {
             'status': 'success',
-            'qr code': "https://" + request.host + link_qr,
-            'signin': "https://" + request.host + '/signin'
+            'qr code': "http://" + request.host + link_qr,
+            'signin': "http://" + request.host + '/signin'
         }
     else:
         return render_template('signup.html')
@@ -129,7 +129,7 @@ def signin():
                 'id_user': f'{_id}',
                 'user_name': f'{username}',
                 'idcard': f'{idcard}',
-                'link_img': "https://" + request.host +  link_img
+                'link_img': "http://" + request.host +  link_img
             }
         return {
             'status': 'Not found user'
