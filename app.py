@@ -127,7 +127,7 @@ def signin():
     else:
         return render_template('signin.html')
 
-@app.route('/static/images/<folder>/<name>', methods=['GET'])
+@app.route('/static/images/license-plates/img_61e5656a274df43cea368c2f.JPEG', methods=['GET'])
 @cross_origin()
 def view_img():
     url = Const.PATH_PROJECT + '/static/img/'
