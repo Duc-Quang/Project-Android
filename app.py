@@ -129,8 +129,8 @@ def signin():
 
 @app.route('/static/images/<folder>/<name>', methods=['GET'])
 @cross_origin()
-def view_img(folder, name):
-    url = Const.PATH_PROJECT + '/static/img/' + folder
+def view_img():
+    url = Const.PATH_PROJECT + '/static/img/'
     print(url) 
     if os.path.exists(url):
         return {
