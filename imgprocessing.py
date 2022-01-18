@@ -16,13 +16,13 @@ def Opt_img(pathfile, s):
     # open the image
     picture = Image.open(pathfile)
     
-    picture.save(Const.UPLOAD_FOLDER + '/' + f'/img_{str(s)}' + ".JPEG", 
+    picture.save(Const.UPLOAD_FOLDER + '/' + f'img_{str(s)}' + ".JPEG", 
                  optimize = True, 
                  quality = 10)
 
     os.remove(pathfile)
 
-    return "/static/license-plates/" + f'/img_{str(s)}' + ".jpeg"
+    return "/static/license-plates/" + f'img_{str(s)}' + ".JPEG"
   
 def QR(s):
     # Generate QR code

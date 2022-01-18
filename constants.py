@@ -5,7 +5,6 @@ import os
 PATH_PROJECT = os.path.dirname(__file__)
 
 PATH_MONGO = "mongodb://localhost:27017/" 
-
 UPLOAD_FOLDER = PATH_PROJECT + "/static/img/license-plates"
 
 QR_FOLDER = PATH_PROJECT + "/static/img/qrcode"
