@@ -1,6 +1,5 @@
 import os
 from flask import Flask, request, send_from_directory, redirect, url_for, flash, render_template
-from flask_restful import Api
 from werkzeug.utils import secure_filename
 import hashlib
 import pymongo
@@ -12,8 +11,6 @@ from imgprocessing import allowed_file, Opt_img, QR, check_folder
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = Const.UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = Const.MAX_CONTENT_LENGTH
-
-api = Api(app)
 cors = CORS(app)
 
 myclient = pymongo.MongoClient(Const.PATH_MONGO)
@@ -130,13 +127,13 @@ def signin():
     else:
         return render_template('signin.html')
 
-@app.route('/static/images/license-plates/<name>')
+@app.route('/static/images/<folder>/<name>', methods=['GET'])
 @cross_origin()
-def view_img(name):
-    url = Const.PATH_PROJECT + '/static/img/license-plates'
+def view_img(folder, name):
+    url = Const.PATH_PROJECT + '/static/img/' + folder
     print(url) 
     if os.path.exists(url):
-        return send_from_directory('static/img/license-plates/', name, mimetype='image/gif')
+        return send_from_directory(f'static/img/{folder}/', name, mimetype='image/gif')
     return {
         "status": "Not Found"
     }
@@ -147,4 +144,3 @@ if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0", port=5000)
 
 # ***********************************************************
-
