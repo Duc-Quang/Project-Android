@@ -23,16 +23,6 @@ def index():
     # return 'Hello world!'
     return redirect(url_for("signin"))
 
-@app.route('/static/<folder>/<name>')
-@cross_origin()
-def view(folder, name):
-    url = Const.PATH_PROJECT + '/static/img/' + folder
-    if os.path.exists(url):
-        return send_from_directory(f'static/img/{folder}/', name, mimetype='image/gif')
-    return {
-        "status": "Not Found"
-    }
-
 # ===========SIGNIN/SIGNUP-POST===========
 @app.route('/signup', methods=['GET', 'POST'])
 @cross_origin()
@@ -137,6 +127,35 @@ def signin():
     else:
         return render_template('signin.html')
 
+@app.route('/static/<folder>/<name>')
+@cross_origin()
+def view(folder, name):
+    url = Const.PATH_PROJECT + '/static/img/' + folder
+    if os.path.exists(url):
+        return send_from_directory(f'static/img/{folder}/', name, mimetype='image/gif')
+    return {
+        "status": "Not Found"
+    }
+
+@app.route('/showdb')
+@cross_origin()
+def showdb():
+    data = []
+    for x in mycol_user.find({}):
+        data.append({
+        "_id": str(x['id']),
+        "username": x['username'],
+        "idcard": x['idcard'],
+        "carnum": x['carnum'], 
+        "address": x['address'],
+        "password": x['password'],
+        "link_img": x['link_img'],
+        "link_qr": x['link_qr']
+        })
+    return {
+        "status": "Success",
+        "data": data
+    }
 
 # ***********************************************************
 if __name__ == '__main__':
