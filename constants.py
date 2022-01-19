@@ -9,7 +9,7 @@ UPLOAD_FOLDER = PATH_PROJECT + "/static/img/license-plates"
 
 QR_FOLDER = PATH_PROJECT + "/static/img/qrcode"
 
-MAX_CONTENT_LENGTH = (1000 * 1024) * 8 # 1mb * 8 = 8Mb
+MAX_CONTENT_LENGTH = (1000 * 1024) * 10 
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 

@@ -143,7 +143,7 @@ def showdb():
     data = []
     for x in mycol_user.find({}):
         data.append({
-        "_id": str(x['id']),
+        "_id": str(x['_id']),
         "username": x['username'],
         "idcard": x['idcard'],
         "carnum": x['carnum'], 
