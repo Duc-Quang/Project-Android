@@ -128,7 +128,8 @@ def view(folder, name):
 @cross_origin()
 def showdb():
     col = request.values.get('col')
-    if col == None:
+    _id = request.values.get('id')
+    if col == None or _id == None:
         return {
             "status": "Please input collection name"
         }
@@ -159,6 +160,20 @@ def showdb():
         return {
             "status": "Success",
             "data": data
+        }
+    if mycol_user.find_one({"_id": ObjectId(_id)}):
+        x = mycol_user.find_one({"_id": ObjectId(_id)})
+        return {
+            "status": "Success",
+            "data": {
+                "_id": str(x['_id']),
+                "username": x['username'],
+                "idcard": x['idcard'],
+                "carnum": x['carnum'], 
+                "address": x['address'],
+                "password": x['password'],
+                "link_qr": x['link_qr']
+            }
         }
     else:
         return {
