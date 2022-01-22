@@ -129,7 +129,7 @@ def view(folder, name):
 def showdb():
     col = request.values.get('col')
     _id = request.values.get('id')
-    if col == None or _id == None:
+    if col == None and _id == None:
         return {
             "status": "Please input collection name"
         }
