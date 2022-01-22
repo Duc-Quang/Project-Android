@@ -101,7 +101,8 @@ def signin():
 
     # =========IF WRONG=========
     return {
-        'status': 'Not found user'
+        'status': 'failure',
+        'msg': 'Not found user'
     }
 
 # ==========SCAN QR==========
