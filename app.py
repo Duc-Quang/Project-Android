@@ -132,7 +132,6 @@ def scanqr():
                 "idcard": x['idcard'],
                 "carnum": x['carnum'], 
                 "address": x['address'],
-                "password": x['password'],
                 "link_qr": x['link_qr']
             }
     }
@@ -145,7 +144,8 @@ def view(folder, name):
     if os.path.exists(url):
         return send_from_directory(f'static/img/{folder}/', name, mimetype='image/gif')
     return {
-        "status": "Not Found"
+        "status": "failure",
+        "msg": "Not found"
     }
 
 # ==========SHOW DATABASE============
@@ -159,7 +159,8 @@ def showdb():
 
     if col == None and _id == None:
         return {
-            "status": "Please input collection name"
+            "status": "failure",
+            "msg": "Please input collection name"
         }
     
     if col == "user":
@@ -171,11 +172,10 @@ def showdb():
             "idcard": x['idcard'],
             "carnum": x['carnum'], 
             "address": x['address'],
-            "password": x['password'],
             "link_qr": x['link_qr']
             })
         return {
-            "status": "Success",
+            "status": "success",
             "data": data
         }
 
@@ -188,28 +188,28 @@ def showdb():
             "time": datetime.datetime.strptime(str(x['time']), '%Y-%m-%d %H:%M:%S.%f').ctime()
             })
         return {
-            "status": "Success",
+            "status": "success",
             "data": data
         }
 
     if mycol_user.find_one({"_id": ObjectId(_id)}):
         x = mycol_user.find_one({"_id": ObjectId(_id)})
         return {
-            "status": "Success",
+            "status": "success",
             "data": {
                 "_id": str(x['_id']),
                 "username": x['username'],
                 "idcard": x['idcard'],
                 "carnum": x['carnum'], 
                 "address": x['address'],
-                "password": x['password'],
                 "link_qr": x['link_qr']
             }
         }
 
     else:
         return {
-            "status": "Not Found"
+            "status": "failure",
+            "msg": "Not found"
         }
 
 
