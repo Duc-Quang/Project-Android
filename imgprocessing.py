@@ -1,28 +1,7 @@
-from genericpath import exists
 import os
 import pyqrcode
 import png
-from pyqrcode import QRCode
-from PIL import Image
 import constants as Const
-  
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in Const.ALLOWED_EXTENSIONS
-
-# compressing an image
-def Opt_img(pathfile, s):
-      
-    # open the image
-    picture = Image.open(pathfile)
-    
-    picture.save(Const.UPLOAD_FOLDER + '/' + f'img_{str(s)}' + ".JPEG", 
-                 optimize = True, 
-                 quality = 10)
-
-    os.remove(pathfile)
-
-    return "/static/license-plates/" + f'img_{str(s)}' + ".JPEG"
   
 def QR(s):
     # Generate QR code

@@ -1,131 +1,114 @@
 import os
-from flask import Flask, request, send_from_directory, redirect, url_for, flash, render_template
-from werkzeug.utils import secure_filename
+from flask import Flask, request, send_from_directory
 import hashlib
 import pymongo
 from bson.objectid import ObjectId
 from flask_cors import CORS, cross_origin 
 import constants as Const
-from imgprocessing import allowed_file, Opt_img, QR, check_folder
+from imgprocessing import  QR, check_folder
 
 app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = Const.UPLOAD_FOLDER
-app.config['MAX_CONTENT_LENGTH'] = Const.MAX_CONTENT_LENGTH
 cors = CORS(app)
 
 myclient = pymongo.MongoClient(Const.PATH_MONGO)
 mydb = myclient['android']
 mycol_user = mydb['user']
+mycol_log = mydb['log']
 
 
 @app.route('/')
 def index():
-    # return 'Hello world!'
-    return redirect(url_for("signin"))
+    return 'Hello world!'
 
 # ===========SIGNIN/SIGNUP-POST===========
-@app.route('/signup', methods=['GET', 'POST'])
+@app.route('/signup', methods=['POST'])
 @cross_origin()
 def signup():
-    if request.method == 'POST':
-        _id = ObjectId()
-        username = request.form["username"]
-        idcard = request.form['idcard']
-        address = request.form['address']
-        carnum = request.form['carnum']
-        # img license plates
-        password = request.form['password']
-        
-        check_folder(Const.UPLOAD_FOLDER)
-        check_folder(Const.QR_FOLDER)
+    _id = ObjectId()
+    username = request.json["username"]
+    idcard = request.json['idcard']
+    address = request.json['address']
+    carnum = request.json['carnum']
+    password = request.json['password']
+    
+    check_folder(Const.QR_FOLDER)
 
-        # ---------------Upload file------------------
-        if 'file' not in request.files:
-            flash('No file part')
-            return redirect(request.url)
-        file = request.files['file']
-        # If the user does not select a file, the browser submits an
-        # empty file without a filename.
-        if file.filename == '':
-            flash('No selected file')
-            return redirect(request.url)
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            pathfile = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    check_username = mycol_user.find_one({"username": str(username)})
+    check_idcard = mycol_user.find_one({"idcard": str(idcard)})
+    check_carnum = mycol_user.find_one({"carnum": str(carnum)})
 
-        check_username = mycol_user.find_one({"username": str(username)})
-        check_idcard = mycol_user.find_one({"idcard": str(idcard)})
-        check_carnum = mycol_user.find_one({"carnum": str(carnum)})
-
-        if check_username != None:
-            return {
-                'status': 'username has been exists'
-            }
-        if check_idcard != None:
-            return {
-                'status': 'idcard has been exists'
-            }
-        if check_carnum != None:
-            return {
-                'status': 'carnum has been exists'
-            }
-        
-        result = hashlib.md5(password.encode())
-        password = result.hexdigest()
-
-        # --------Optimize img-----------
-        link_img = Opt_img(pathfile, _id)
-
-        # --------Create QR--------------- 
-        link_qr = QR(_id)
-
-        mycol_user.insert_one({
-            "_id": _id,
-            "username": str(username), 
-            "idcard": str(idcard),
-            "carnum": str(carnum), 
-            "address": str(address), 
-            "password": str(password),
-            "link_img": str(link_img),
-            "link_qr": str(link_qr)
-        })
+    if check_username != None:
         return {
-            'status': 'success',
-            'qr code': "http://" + request.host + link_qr,
-            'signin': "http://" + request.host + '/signin'
+            'status': 'username has been exists'
         }
-    else:
-        return render_template('signup.html')
+    if check_idcard != None:
+        return {
+            'status': 'idcard has been exists'
+        }
+    if check_carnum != None:
+        return {
+            'status': 'carnum has been exists'
+        }
+    
+    result = hashlib.md5(password.encode())
+    password = result.hexdigest()
+
+    # --------Create QR--------------- 
+    link_qr = QR(_id)
+
+    mycol_user.insert_one({
+        "_id": _id,
+        "username": str(username), 
+        "idcard": str(idcard),
+        "carnum": str(carnum), 
+        "address": str(address), 
+        "password": str(password),
+        "link_qr": str(link_qr)
+    })
+    return {
+        'status': 'success',
+        'qr code': "http://" + request.host + link_qr
+    }
 
 
-@app.route('/signin', methods=['GET', 'POST'])
+
+@app.route('/signin', methods=['POST'])
 @cross_origin()
 def signin():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
+    username = request.json['username']
+    password = request.json['password']
 
-        x = mycol_user.find_one({"username": username})
-        result = hashlib.md5(password.encode())
-        password = result.hexdigest()
+    x = mycol_user.find_one({"username": username})
+    result = hashlib.md5(password.encode())
+    password = result.hexdigest()
 
-        if x != None and x['password'] == str(password):
-            _id = x['_id']
-            idcard = x['idcard']
-            link_img = x['link_img']
-            return {
-                'status': 'success',
-                'id_user': f'{_id}',
-                'user_name': f'{username}',
-                'idcard': f'{idcard}',
-                'link_img': "http://" + request.host +  link_img
-            }
+    if x != None and x['password'] == str(password):
+        _id = x['_id']
+        idcard = x['idcard']
         return {
-            'status': 'Not found user'
+            'status': 'success',
+            'id_user': f'{_id}',
+            'user_name': f'{username}',
+            'idcard': f'{idcard}'
         }
-    else:
-        return render_template('signin.html')
+    return {
+        'status': 'Not found user'
+    }
+
+@app.route('/log', methods=['POST'])
+@cross_origin()
+def log():
+    _id = request.json["_id"]
+    if mycol_log.find_one({"_id": ObjectId(_id)}):
+        mycol_log.delete_one({"_id": ObjectId(_id)})
+        return {
+            "status": "success delete",
+        }
+    mycol_log.insert_one({"_id": ObjectId(_id)})
+    return {
+        "status": "success add"
+    }
+
 
 @app.route('/static/<folder>/<name>')
 @cross_origin()
@@ -149,7 +132,6 @@ def showdb():
         "carnum": x['carnum'], 
         "address": x['address'],
         "password": x['password'],
-        "link_img": x['link_img'],
         "link_qr": x['link_qr']
         })
     return {
