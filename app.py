@@ -150,11 +150,11 @@ def showdb():
         }
     if col == "log":
         data = []
-        for x in mycol_user.find({}):
+        for x in mycol_log.find({}):
             data.append({
             "_id": str(x['_id']),
             "username": x['username'],
-            "time": datetime.datetime.strptime(str(data['time']), '%Y-%m-%d %H:%M:%S.%f').ctime()
+            "time": datetime.datetime.strptime(str(x['time']), '%Y-%m-%d %H:%M:%S.%f').ctime()
             })
         return {
             "status": "Success",
