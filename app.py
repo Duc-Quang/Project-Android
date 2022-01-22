@@ -2,6 +2,7 @@ import os
 from flask import Flask, request, send_from_directory
 import hashlib
 import pymongo
+import datetime
 from bson.objectid import ObjectId
 from flask_cors import CORS, cross_origin 
 import constants as Const
@@ -104,7 +105,10 @@ def log():
         return {
             "status": "success delete",
         }
-    mycol_log.insert_one({"_id": ObjectId(_id)})
+    data = mycol_log.find_one({"_id": ObjectId(_id)})
+    username = data["username"]
+    time = datetime.datetime.now()
+    mycol_log.insert_one({"_id": ObjectId(_id), "time": time, "username": username})
     return {
         "status": "success add"
     }
@@ -123,21 +127,44 @@ def view(folder, name):
 @app.route('/showdb')
 @cross_origin()
 def showdb():
-    data = []
-    for x in mycol_user.find({}):
-        data.append({
-        "_id": str(x['_id']),
-        "username": x['username'],
-        "idcard": x['idcard'],
-        "carnum": x['carnum'], 
-        "address": x['address'],
-        "password": x['password'],
-        "link_qr": x['link_qr']
-        })
-    return {
-        "status": "Success",
-        "data": data
-    }
+    col = request.values.get('col')
+    if col == None:
+        return {
+            "status": "Please input collection name"
+        }
+    if col == "user":
+        data = []
+        for x in mycol_user.find({}):
+            data.append({
+            "_id": str(x['_id']),
+            "username": x['username'],
+            "idcard": x['idcard'],
+            "carnum": x['carnum'], 
+            "address": x['address'],
+            "password": x['password'],
+            "link_qr": x['link_qr']
+            })
+        return {
+            "status": "Success",
+            "data": data
+        }
+    if col == "log":
+        data = []
+        for x in mycol_user.find({}):
+            data.append({
+            "_id": str(x['_id']),
+            "username": x['username'],
+            "time": datetime.datetime.strptime(str(data['time']), '%Y-%m-%d %H:%M:%S.%f').ctime()
+            })
+        return {
+            "status": "Success",
+            "data": data
+        }
+    else:
+        return {
+            "status": "Not Found"
+        }
+
 
 # ***********************************************************
 if __name__ == '__main__':
