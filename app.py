@@ -34,29 +34,36 @@ def signup():
     
     check_folder(Const.QR_FOLDER)
 
+    # -------------Check exists-------------
     check_username = mycol_user.find_one({"username": str(username)})
     check_idcard = mycol_user.find_one({"idcard": str(idcard)})
     check_carnum = mycol_user.find_one({"carnum": str(carnum)})
 
+    # -----If it found------
     if check_username != None:
         return {
-            'status': 'username has been exists'
+            'status': 'failure',
+            'msg': 'username has been exists'
         }
     if check_idcard != None:
         return {
-            'status': 'idcard has been exists'
+            'status': 'failure',
+            'msg': 'idcard has been exists'
         }
     if check_carnum != None:
         return {
-            'status': 'carnum has been exists'
+            'status': 'failure',
+            'msg': 'carnum has been exists'
         }
     
+    # ----------hash password----------
     result = hashlib.md5(password.encode())
     password = result.hexdigest()
 
     # --------Create QR--------------- 
     link_qr = QR(_id)
 
+    # --------add to database---------
     mycol_user.insert_one({
         "_id": _id,
         "username": str(username), 
@@ -66,12 +73,10 @@ def signup():
         "password": str(password),
         "link_qr": str(link_qr)
     })
+
     return {
-        'status': 'success',
-        'qr code': "http://" + request.host + link_qr
+        'status': 'success'
     }
-
-
 
 @app.route('/signin', methods=['POST'])
 @cross_origin()
@@ -79,38 +84,47 @@ def signin():
     username = request.json['username']
     password = request.json['password']
 
+    # --------Check username&password----------
     x = mycol_user.find_one({"username": username})
     result = hashlib.md5(password.encode())
     password = result.hexdigest()
 
+    # ====IF CORRECT====
     if x != None and x['password'] == str(password):
         _id = x['_id']
         idcard = x['idcard']
+
         return {
             'status': 'success',
-            'id_user': f'{_id}',
-            'user_name': f'{username}',
-            'idcard': f'{idcard}'
+            'id_user': f'{_id}'
         }
+
+    # =========IF WRONG=========
     return {
         'status': 'Not found user'
     }
 
-@app.route('/log', methods=['POST'])
+# ==========SCAN QR==========
+@app.route('/scanqr', methods=['POST'])
 @cross_origin()
-def log():
+def scanqr():
     _id = request.json["_id"]
+
+    # ==========if exists in log => delete===========
     if mycol_log.find_one({"_id": ObjectId(_id)}):
         mycol_log.delete_one({"_id": ObjectId(_id)})
         return {
-            "status": "success delete",
+            "status": "success",
         }
+    
+    # =========if not exists in log => add===========
     x = mycol_user.find_one({"_id": ObjectId(_id)})
     username = x["username"]
     time = datetime.datetime.now()
     mycol_log.insert_one({"_id": ObjectId(_id), "time": time, "username": username})
+
     return {
-        "status": "success add",
+        "status": "success",
         "data": {
                 "_id": str(x['_id']),
                 "username": x['username'],
@@ -122,7 +136,7 @@ def log():
             }
     }
 
-
+# ============Show QR=============
 @app.route('/static/<folder>/<name>')
 @cross_origin()
 def view(folder, name):
@@ -133,15 +147,20 @@ def view(folder, name):
         "status": "Not Found"
     }
 
+# ==========SHOW DATABASE============
 @app.route('/showdb')
 @cross_origin()
 def showdb():
     col = request.values.get('col')
     _id = request.values.get('id')
+
+    # ======SHOW DATABSE FOLLOW BY col ("user" & "slot"), id ("number_id")
+
     if col == None and _id == None:
         return {
             "status": "Please input collection name"
         }
+    
     if col == "user":
         data = []
         for x in mycol_user.find({}):
@@ -158,7 +177,8 @@ def showdb():
             "status": "Success",
             "data": data
         }
-    if col == "log":
+
+    if col == "slot":
         data = []
         for x in mycol_log.find({}):
             data.append({
@@ -170,6 +190,7 @@ def showdb():
             "status": "Success",
             "data": data
         }
+
     if mycol_user.find_one({"_id": ObjectId(_id)}):
         x = mycol_user.find_one({"_id": ObjectId(_id)})
         return {
@@ -184,6 +205,7 @@ def showdb():
                 "link_qr": x['link_qr']
             }
         }
+
     else:
         return {
             "status": "Not Found"
