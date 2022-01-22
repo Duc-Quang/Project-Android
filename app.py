@@ -105,7 +105,7 @@ def log():
         return {
             "status": "success delete",
         }
-    data = mycol_log.find_one({"_id": ObjectId(_id)})
+    data = mycol_user.find_one({"_id": ObjectId(_id)})
     username = data["username"]
     time = datetime.datetime.now()
     mycol_log.insert_one({"_id": ObjectId(_id), "time": time, "username": username})
