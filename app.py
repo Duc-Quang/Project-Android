@@ -76,6 +76,7 @@ def signup():
 
     return {
         'status': 'success'
+        'msg': 'Register Successful'
     }
 
 @app.route('/signin', methods=['POST'])
@@ -116,6 +117,7 @@ def scanqr():
         mycol_log.delete_one({"_id": ObjectId(_id)})
         return {
             "status": "success",
+            "msg": "Clear data successful"
         }
     
     # =========if not exists in log => add===========
