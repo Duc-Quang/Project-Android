@@ -75,7 +75,7 @@ def signup():
     })
 
     return {
-        'status': 'success'
+        'status': 'success',
         'msg': 'Register Successful'
     }
 
