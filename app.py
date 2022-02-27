@@ -168,15 +168,21 @@ def showdb():
     if mycol_user.find_one({"_id": ObjectId(_id)}):
         x = mycol_user.find_one({"_id": ObjectId(_id)})
         return {
-            "status": "success",
-            "data": {
-                "_id": str(x['_id']),
-                "username": x['username'],
-                "idcard": x['idcard'],
-                "carnum": x['carnum'], 
-                "address": x['address'],
-                "link_qr": x['link_qr']
-            }
+            "_id": str(x['_id']),
+            "username": x['username'],
+            "idcard": x['idcard'],
+            "carnum": x['carnum'], 
+            "address": x['address'],
+            "link_qr": x['link_qr']
+            # "status": "success",
+            # "data": {
+                # "_id": str(x['_id']),
+                # "username": x['username'],
+                # "idcard": x['idcard'],
+                # "carnum": x['carnum'], 
+                # "address": x['address'],
+                # "link_qr": x['link_qr']
+            # }
         }
     
     if col == "user":
