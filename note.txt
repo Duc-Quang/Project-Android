@@ -18,3 +18,5 @@ ignore
 ssh ubuntu@192.168.60.128
 
 git clone -b QR-App_Android https://github.com/Duc-Quang/Project-Android.git
+
+https://support.cpanel.net/hc/en-us/articles/360056554194-How-to-edit-a-file-on-command-line
